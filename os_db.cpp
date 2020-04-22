@@ -4,14 +4,23 @@
 #include <QSysInfo>
 #include <QMetaEnum>
 #include <QMetaObject>
+#include "wmic.h"
 
 using namespace std;
 
 OS_DB::OS_DB()
 {
-    QOperatingSystemVersion inf =  QOperatingSystemVersion::current();
+    QOperatingSystemVersion inf = QOperatingSystemVersion::current();
+    QOperatingSystemVersion::OSType OSType = inf.type();
 
-    p_name = inf.name().toStdString();
+    if (OSType == QOperatingSystemVersion::OSType::Windows)
+    {
+        p_name = Wmic::GetValue("os get", "Caption").toStdString();
+    }
+    else
+    {
+        p_name = inf.name().toStdString();
+    }
     p_version = std::to_string(inf.majorVersion());
     p_buildNumber = inf.microVersion();
     p_servicePack = inf.minorVersion();

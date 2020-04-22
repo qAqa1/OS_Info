@@ -1,12 +1,15 @@
 #include "processordb.h"
 
 #include <QOperatingSystemVersion>
-#include <QProcess>
+#include <QString>
+#include <QStringList>
+#include "wmic.h"
 
 namespace WmicParams
 {
 // wmic cpu get - все параметры
-    const QString name = "name",
+
+    const QString name = "Name",
 //                  DeviceID = "DeviceID",
                   NumberOfCores = "NumberOfCores",
                   NumberOfLogicalProcessors = "NumberOfLogicalProcessors",
@@ -51,13 +54,7 @@ QString ProcessorDB::ClearStr(QString sourceStr, QStringList trash)
 
 QString ProcessorDB::GetWindowsCPUParam(QString paramName)
 {
-    QString cpucorp = "wmic cpu get " + paramName;
-    QProcess windowscpu;
-    windowscpu.start(cpucorp);
-    windowscpu.waitForFinished();
-    QString windowsOutput = windowscpu.readAllStandardOutput();
-    QString reslut = ClearStr(windowsOutput, {paramName,"\r", "\n", " "});
-    return reslut;
+    return Wmic::GetValue("cpu get", paramName);
 }
 
 double ProcessorDB::CalcGflops(double maxClockSpeed, double coresCount)
