@@ -7,7 +7,7 @@
 class ProcessorDB
 {
    public:
-    ProcessorDB();
+    ProcessorDB(int id);
     ProcessorDB(int id, std::string name, double perf, double clock, int logicCores, int physCores);
     ProcessorDB(const ProcessorDB& cpy);
 

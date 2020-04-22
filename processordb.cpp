@@ -6,7 +6,6 @@
 namespace WmicParams
 {
 // wmic cpu get - все параметры
-
     const QString name = "name",
 //                  DeviceID = "DeviceID",
                   NumberOfCores = "NumberOfCores",
@@ -14,23 +13,30 @@ namespace WmicParams
                   MaxClockSpeed = "MaxClockSpeed";
 }
 
-ProcessorDB::ProcessorDB()
+ProcessorDB::ProcessorDB(int id)
 {
-    QString OSName = QSysInfo::kernelType();
-
     QOperatingSystemVersion inf = QOperatingSystemVersion::current();
-
     QOperatingSystemVersion::OSType OSType = inf.type();
 
     if (OSType == QOperatingSystemVersion::OSType::Windows)
     {
-        p_id = 0;
+        p_id = (double)id;
         p_name = GetWindowsCPUParam(WmicParams::name).toStdString();
         p_clock = GetWindowsCPUParam(WmicParams::MaxClockSpeed).toDouble();
         p_logicCores = GetWindowsCPUParam(WmicParams::NumberOfLogicalProcessors).toInt();
         p_physCores = GetWindowsCPUParam(WmicParams::NumberOfCores).toInt();
         p_perf = CalcGflops(p_clock, p_physCores);
     }
+}
+
+ProcessorDB::ProcessorDB(int id, std::string name, double perf, double clock, int logicCores, int physCores)
+{
+    p_id = (double)id;
+    p_name = name;
+    p_clock = perf;
+    p_logicCores = clock;
+    p_physCores = logicCores;
+    p_perf = physCores;
 }
 
 QString ProcessorDB::ClearStr(QString sourceStr, QStringList trash)
