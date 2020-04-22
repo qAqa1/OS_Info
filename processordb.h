@@ -4,6 +4,8 @@
 #include <iostream>
 #include <QString>
 
+// TODO: портировать на линукс
+
 class ProcessorDB
 {
    public:

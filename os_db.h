@@ -4,6 +4,8 @@
 #include <iostream>
 #include <QOperatingSystemVersion>
 
+// TODO: портировать на линукс
+
 class OS_DB
 {
     public:
