@@ -2,10 +2,11 @@
 #define PROCESSORDB_H
 
 #include <iostream>
+#include <QString>
 
 class ProcessorDB
 {
-public:
+   public:
     ProcessorDB();
     ProcessorDB(int id, std::string name, double perf, double clock, int logicCores, int physCores);
     ProcessorDB(const ProcessorDB& cpy);
@@ -24,6 +25,15 @@ public:
     double p_clock;
     int p_logicCores;
     int p_physCores;
+
+    QString ClearStr(QString sourceStr, QStringList trash);
+    QString GetWindowsCPUParam(QString paramName);
+    double CalcGflops(double maxClockSpeed, double coresCount);
+
+    QString DebugDescription() const;
+   public:
+    operator QString() const;
+    operator std::string() const;
 };
 
 #endif // PROCESSORDB_H
