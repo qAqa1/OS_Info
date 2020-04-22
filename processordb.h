@@ -28,7 +28,6 @@ class ProcessorDB
     int p_logicCores;
     int p_physCores;
 
-    QString ClearStr(QString sourceStr, QStringList trash);
     QString GetWindowsCPUParam(QString paramName);
     double CalcGflops(double maxClockSpeed, double coresCount);
 

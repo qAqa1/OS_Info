@@ -42,16 +42,6 @@ ProcessorDB::ProcessorDB(int id, std::string name, double perf, double clock, in
     p_perf = physCores;
 }
 
-QString ProcessorDB::ClearStr(QString sourceStr, QStringList trash)
-{
-    for (QString t : trash)
-    {
-        sourceStr = sourceStr.replace(t, "");
-    }
-
-    return sourceStr;
-}
-
 QString ProcessorDB::GetWindowsCPUParam(QString paramName)
 {
     return Wmic::GetValue("cpu get", paramName);
